@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style>
+	*{
+		padding: 0;
+		margin: 0;
+		list-style: none;
+	}
+	.back{
+		width: 590px;
+		height: 340px;
+		border: 1px solid;
+		margin: 100px auto;
+		overflow: hidden;
+		position: relative;
+	}
+	.poin{
+		position: absolute;
+		top: 400px;
+		left: 48%;
+		z-index: 999;
+	}
+	.poin li{
+		width: 10px;
+		height: 10px;
+		border-radius: 50%;
+		border: 3px solid #ff6700;
+		display: inline-block;
+		cursor: pointer;
+	}
+	.btn{
+		width: 590px;
+		height: 50px; 
+		margin: 0 auto;
+		left: 50%;
+		margin-left: -295px;
+		position: absolute;
+		top: 250px;
+		z-index: 998;
+	}
+	.btn span{
+		display: inline-block;
+		width: 50px;
+		height: 50px;
+		background:#000;
+		font-size: 30px;
+		color: #fff;
+		text-align: center;
+		line-height: 50px;
+		cursor: pointer;
+		background: rgba(0,0,0,0.5)
+	}
+	.next{
+		float: right;
+	}
+	.active{
+		background: red
+	}
+</style>
+</head>
+<body>
+	<ul class="back">
+		<li>
+			<img src="img/1.jpg" alt="">
+		</li>
+		<li>
+			<img src="img/2.jpg" alt="">
+		</li>
+		<li>
+			<img src="img/3.jpg" alt="">
+		</li>
+		<li>
+			<img src="img/4.jpg" alt="">
+		</li>
+	</ul>
+	<ul class="poin">
+		<li class="active"></li>
+		<li></li>
+		<li></li>
+		<li></li>
+	</ul>
+	<div class="btn">
+		<span class="prev"> < </span>
+		<span class="next"> > </span>
+	</div>
+<script src="js/jquery-3.2.1.min.js"></script>
+<script>
+$(function(){
+	function ban(){
+		var index = 0;
+		var len = $(".back li").length-1;
+
+		function tab(index){
+			$(".poin li").eq(index).addClass("active").siblings().removeClass("active");
+			$(".back li").eq(index).fadeIn().siblings().fadeOut();
+		}
+
+		$(".poin li").click(function(){
+			index = $(this).index();
+			tab(index);
+		})
+
+		$(".prev").click(function(){
+			index--;
+			if(index > 0){
+				index = len;
+			}
+			tab(index);
+		})
+
+		$(".next").click(function(){
+			index++;
+			if(index > len){
+				index = 0;
+			}
+			tab(index);
+		})
+
+	}
+
+	ban();
+
+})
+
+</script>
+
+</body>
+</html>
