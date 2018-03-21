@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+<style>
+	*{padding: 0;margin: 0;}
+	#box{
+		width: 200px;
+		height: 200px;
+		background: red;
+		position: absolute;
+	}
+</style>
+</head>
+<body>
+	<div id="box">1111111111<img src="img/1.jpg" alt=""></div>
+<script>
+	var box = document.getElementById("box")
+	var dix = 0; //鼠标横向坐标	
+	var diy = 0; //鼠标纵向坐标
+	box.onmousedown = function(e){ //鼠标按下事件
+		var ev = e || window.event;
+		dix = ev.clientX - this.offsetLeft; //拿到鼠标点击位置 和box 的left距离位置
+		diy = ev.clientY - this.offsetTop; // 拿到鼠标点击位置 和box 的top距离位置
+
+		document.onmousemove = function(e){ // 鼠标按下后移动事件
+			var ev = e || window.event;
+	// 鼠标位置 - 鼠标和box的left的位置 = box的最终位置 		
+			box.style.left = ev.clientX - dix + "px"; 
+			box.style.top = ev.clientY - diy + "px"; // 同上
+		}
+		document.onmouseup = function(){
+			document.onmousemove = null;
+			document.onmouseup = null;
+		}
+		return false; //加上这个在拖拽元素是图片的时候可以阻止默认行为(让图片实现拖拽效果)
+	}
+</script>
+</body>
+</hmtl>

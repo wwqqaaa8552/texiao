@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style>
+	*{padding: 0;margin: 0;list-style: none;}
+	.top{
+		width:1200px;
+		margin: 0 auto;  
+	}
+	.ttp{
+		width: 100%;
+	}
+	.ttp{
+		font-size: 200px;
+		color: #fff;
+		text-align: center;
+		line-height: 200px;
+	}
+	#domul{
+		position:absolute;
+		top: 800px;
+		left: 100px
+	}
+	#domul li{
+		width: 50px;
+		height: 50px;
+		font-size: 30px;
+		text-align: center;
+		border: 1px solid;
+		line-height: center;
+		cursor: pointer;
+	}
+	
+	.hov{
+		background: red;
+	}
+
+</style>
+</head>
+<body>
+	<div style="width: 100%;height: 700px;"></div>
+	<div class="top">
+		<div class="ttp" style="height:300px;background:red">1</div>
+		<div class="ttp" style="height:500px;background:#D200D2">2</div>
+		<div class="ttp" style="height:450px;background: #4B0091">3</div>
+		<div class="ttp" style="height:280px;background:#01814A">4</div>
+		<div class="ttp" style="height:400px;background:#00A600">5</div>
+		<div class="ttp" style="height:600px;background:#005AB5">6</div>
+		<div class="ttp" style="height:345px;background:#EA7500">7</div>
+		<div class="ttp" style="height:800px;background:#8F4586">8</div>
+	</div>
+	<div style="width: 100%;height:900px;"></div>
+	<ul id="domul">
+		<li>1</li>
+		<li>2</li>
+		<li>3</li>
+		<li>4</li>
+		<li>5</li>
+		<li>6</li>
+		<li>7</li>
+		<li>8</li>
+	</ul>
+
+<script src="js/jquery-3.2.1.min.js"></script>
+<script>
+
+	$(function(){
+		var domli = $("#domul li"); //获取数组内所有li元素
+		var ttp = $(".ttp"); 	//获取所有div的类
+		var domul  = $("#domul");
+
+		var x = true; //添加一个全局开关
+
+		// 给li元素添加点击事件(点击移动到指定div)
+		domli.click(function(){
+			x = false; 
+			//给当前点击的li添加背景色样式，没有被点击的li没有样式 
+			$(this).addClass("hov").siblings().removeClass("hov");
+			var index = $(this).index(); //获取每个li的下标 0 1 2 3 ~~~
+			var top = ttp.eq(index).offset().top;//获取每个div距离顶部的位置
+			//兼容各个浏览器的写法
+			$("html,body").stop(true).animate({ //移动动画
+				scrollTop: top, //每个div距离html 或者body顶部的距离
+			}, 
+				function(){ //解决点击li后 滚动监听失效
+					x= true;
+				}
+			);
+
+		});
+
+		//滚动监听
+		$(window).scroll(function(){
+			if(x == true){
+				var sTop = $(this).scrollTop(); //滚动条
+				if(sTop>700){//判断滚动条滚动到大于700的话
+					domul.css({
+						"position":"fixed",
+						"top": "100px",
+					})
+
+					for(var i=0;i<ttp.length;i++){ //这里的div下标是 0~~7
+						if(sTop < ttp.eq(i).offset().top){ //滚动条和每个div之间的top距离
+							var sinde = i-1; //这里下标改变 -1~~6
+							if(sinde>=0){ //大于0就开始执行样式必须暂停
+								//让每一个li都监听到滚动指定div变色 
+								domli.eq(sinde).addClass("hov").siblings().removeClass("hov");
+								return; //重要！！return或break
+							} 
+
+						}
+					}
+					//对最后一个div 单独设置
+					if(sTop>ttp.eq(ttp.length-1).offset().top){
+						domli.eq(ttp.length-1).addClass("hov").siblings().removeClass("hov");
+					}
+				}else{
+					domul.css({
+						"position":"absolute",
+						"top": "800px",
+					})
+				}
+			}
+		})
+
+
+
+	})
+
+
+
+
+
+</script>
+
+</body>
+</html>

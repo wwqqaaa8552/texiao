@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<style>
+		li{
+			width: 600px;
+			height: 50px;
+			background: green;
+			margin: 50px 0px;
+			list-style: none; 
+		}
+	</style>
+</head>
+<body>
+	<ul id="box">
+		<li>111</li>
+		<li>22222</li>
+		<li>3333</li>
+		<li>444444</li>
+		<li>5555555</li>
+	</ul>
+
+
+<script>
+
+	var box = document.getElementById("box");
+	
+	var uli = document.getElementsByTagName("li");
+	for(var i=0;i<uli.length;i++){
+		//uli[i].index = i;//0,1,2,3,4 获取每个li的下标
+		uli[i].onclick = function(){ // 给每个li添加点击事件
+			for(var j=0;j<uli.length;j++){	
+				uli[j].style.background = "green";
+			}
+			this.style.background = "red";
+		}
+	}
+
+
+
+
+</script>
+
+</body>
+</html>
